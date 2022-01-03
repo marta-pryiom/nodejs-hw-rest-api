@@ -5,7 +5,8 @@ import { NotFound } from '../../lib/messages'
 
 const contactByIdContr = async (req, res, next) => {
   const { id } = req.params
-  const contact = await getContactById(id)
+  const { id: userId } = req.user
+  const contact = await getContactById(userId, id)
   if (contact) {
     return res
       .status(HttpCode.OK)

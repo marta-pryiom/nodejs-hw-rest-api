@@ -5,7 +5,8 @@ import { Deleted, NotFound } from '../../lib/messages'
 
 const deleteContactContr = async (req, res, next) => {
   const { id } = req.params
-  const contact = await removeContact(id)
+  const { id: userId } = req.user
+  const contact = await removeContact(userId, id)
   if (contact) {
     return res
       .status(HttpCode.OK)

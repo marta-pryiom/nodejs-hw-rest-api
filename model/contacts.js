@@ -1,6 +1,6 @@
 import { MAX_AGE, MIN_AGE } from '../lib/constants'
 import pkg from 'mongoose'
-const { Schema, model } = pkg
+const { Schema, SchemaTypes, model } = pkg
 
 const contactSchema = new Schema(
   {
@@ -24,10 +24,15 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     versionKey: false,
-    timesstamps: true,
+    timestamps: true,
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
