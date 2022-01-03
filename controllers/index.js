@@ -1,11 +1,18 @@
-import addNewContactContr from './contacts/addNewContactContr'
-import allContactsContr from './contacts/allContactsContr'
-import contactByIdContr from './contacts/contactByIdContr'
-import deleteContactContr from './contacts/deleteContactContr'
-import updateContactContr from './contacts/updateContactContr'
-import updatePartOfContact from './contacts/updatePartOfContact'
+import {
+  addNewContactContr,
+  allContactsContr,
+  contactByIdContr,
+  deleteContactContr,
+  updateContactContr,
+  updatePartOfContact,
+} from './contacts'
 
-export default {
+import { registration, login, logout } from './auth'
+
+export {
+  registration,
+  login,
+  logout,
   addNewContactContr,
   allContactsContr,
   contactByIdContr,
@@ -13,26 +20,3 @@ export default {
   updateContactContr,
   updatePartOfContact,
 }
-// import {
-//   validationId,
-//   updateValidation,
-//   addValidation,
-//   updateValidationFavor,
-// } from '../../midllewares/validation/contactValidation'
-// import { Router } from 'express'
-
-// const router = new Router()
-
-// router.get('/', allContactsContr)
-// router.get('/:id', validationId, contactByIdContr)
-// router.post('/', addValidation, addNewContactContr)
-// router.put('/:id', validationId, updateValidation, updateContactContr)
-// router.patch(
-//   '/:id/favorite',
-//   validationId,
-//   updateValidationFavor,
-//   updateContactContr,
-// )
-// router.delete('/:id', validationId, deleteContactContr)
-
-// export default router

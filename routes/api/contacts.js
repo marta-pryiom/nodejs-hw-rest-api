@@ -1,4 +1,11 @@
-import Controllers from '../../controllers'
+import {
+  allContactsContr,
+  contactByIdContr,
+  addNewContactContr,
+  deleteContactContr,
+  updatePartOfContact,
+  updateContactContr,
+} from '../../controllers'
 import {
   validationId,
   updateValidation,
@@ -7,23 +14,18 @@ import {
   updateValidationFavor,
 } from '../../midllewares/validation/contactValidation'
 import { Router } from 'express'
+import quard from '../../midllewares/validation/guard'
 
 const router = new Router()
 
-router.get('/', validateQuery, Controllers.allContactsContr)
-router.get('/:id', validationId, Controllers.contactByIdContr)
-router.post('/', addValidation, Controllers.addNewContactContr)
-router.delete('/:id', validationId, Controllers.deleteContactContr)
-router.put(
-  '/:id',
-  validationId,
-  updateValidation,
-  Controllers.updateContactContr,
-)
+router.get('/', [quard, validateQuery], allContactsContr)
+router.get('/:id', [quard, validationId], contactByIdContr)
+router.post('/', [quard, addValidation], addNewContactContr)
+router.delete('/:id', [quard, validationId], deleteContactContr)
+router.put('/:id', [quard, validationId, updateValidation], updateContactContr)
 router.patch(
   '/:id/favorite',
-  validationId,
-  updateValidationFavor,
-  Controllers.updatePartOfContact,
+  [quard, validationId, updateValidationFavor],
+  updatePartOfContact,
 )
 export default router
