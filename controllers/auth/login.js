@@ -4,6 +4,7 @@ import authService from '../../service/auth'
 const login = async (req, res, next) => {
   const { email, password } = req.body
   const user = await authService.getUser(email, password)
+  
   if (!user) {
     return res.status(HttpCode.UNAUTHORIZED).json({
       status: 'error',
