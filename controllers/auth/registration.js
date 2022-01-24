@@ -5,6 +5,7 @@ import {
   SenderNodemailer,
   // SenderSendgrid,
 } from '../../service/email'
+import { CustomError } from '../../lib/custom-error'
 
 const registration = async (req, res, next) => {
   try {
@@ -12,11 +13,7 @@ const registration = async (req, res, next) => {
     const { email } = req.body
     const isUserExist = await authService.isUserExist(email)
     if (isUserExist) {
-      return res.status(HttpCode.CONFLICT).json({
-        status: 'error',
-        code: HttpCode.CONFLICT,
-        message: 'Email is already exist',
-      })
+      throw new CustomError (HttpCode.CONFLICT,'Email is already exist')
     }
     const userData = await authService.create(req.body)
     const emailService = new EmailService(

@@ -4,7 +4,7 @@ class EmailService {
     this.sender = sender
     switch (env) {
       case 'development':
-        this.link = 'https://d674-193-19-255-244.ngrok.io'
+        this.link = 'https:localhost:5050'
         break
       case 'test':
         this.link = 'http://localhost:3000'
@@ -16,6 +16,7 @@ class EmailService {
         this.link = 'http://localhost:5050'
     }
   }
+
   createEmailTemplate(username, verifyToken) {
     const mailGenerator = new Mailgen({
       theme: 'default',

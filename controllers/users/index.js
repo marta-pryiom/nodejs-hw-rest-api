@@ -9,9 +9,10 @@ import {
 } from '../../service/avatar-storage'
 import {
   EmailService,
-  SenderNodemailer,
+  // SenderNodemailer,
   SenderSendgrid,
 } from '../../service/email'
+import { CustomError } from '../../lib/custom-error'
 
 const aggregation = async (req, res, next) => {
   const { id } = req.params
@@ -21,11 +22,7 @@ const aggregation = async (req, res, next) => {
       .status(HttpCode.OK)
       .json({ status: 'success', code: HttpCode.OK, data })
   }
-  res.status(HttpCode.NOT_FOUND).json({
-    status: 'error',
-    code: HttpCode.NOT_FOUND,
-    message: NotFound,
-  })
+  throw new CustomError (HttpCode.NOT_FOUND,NotFound)
 }
 const uploadAvatar = async (req, res, next) => {
   const uploadService = new UploadAvatarService(
@@ -69,7 +66,8 @@ const repeatEmailForVerifyUser = async (req, res, next) => {
 
     const emailService = new EmailService(
       process.env.NODE_ENV,
-      new SenderNodemailer(),
+      new SenderSendgrid(),
+      // new SenderNodemailer(),
     )
     const isSend = await emailService.sendVerifyEmail(
       email,
@@ -83,17 +81,9 @@ const repeatEmailForVerifyUser = async (req, res, next) => {
         data: { message: 'Success' },
       })
     }
-    return res.status(HttpCode.UE).json({
-      status: 'error',
-      code: HttpCode.UE,
-      data: { message: 'Unprocessable Entity' },
-    })
+    throw new CustomError(HttpCode.SE,'Unprocessable Entity')
   }
-  res.status(HttpCode.NOT_FOUND).json({
-    status: 'error',
-    code: HttpCode.NOT_FOUND,
-    data: { message: 'NO user with this email is found' },
-  })
+  throw new CustomError(HttpCode.NOT_FOUND,'NO user with this email is found')
 }
 
 export { aggregation, uploadAvatar, verifyUser, repeatEmailForVerifyUser }

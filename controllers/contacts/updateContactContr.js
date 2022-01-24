@@ -2,6 +2,7 @@ import { updateContact } from '../../repository/contacts'
 import { HttpCode } from '../../lib/constants'
 import { NotFound } from '../../lib/messages'
 // import { colors } from '../../helpers'
+import { CustomError } from '../../lib/custom-error'
 
 const updateContactContr = async (req, res, next) => {
   const { id } = req.params
@@ -15,11 +16,8 @@ const updateContactContr = async (req, res, next) => {
     //   { status: 'success', code: HttpCode.OK, data: { contact } }.yellow,
     // )
   }
-  res.status(HttpCode.NOT_FOUND).json({
-    status: 'error',
-    code: HttpCode.NOT_FOUND,
-    message: NotFound,
-  })
+  throw new CustomError(HttpCode.NOT_FOUND,NotFound)
+  
 }
 
 export default updateContactContr
