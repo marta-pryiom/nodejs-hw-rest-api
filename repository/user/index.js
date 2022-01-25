@@ -1,15 +1,15 @@
 import User from '../../model/user'
 
-const findById = async (id) => {
+const findById = async id => {
   return await User.findById(id)
 }
-const findByEmail = async (email) => {
+const findByEmail = async email => {
   return await User.findOne({ email })
 }
-const findByVerifyToken = async (verifyTokenEmail) => {
+const findByVerifyToken = async verifyTokenEmail => {
   return await User.findOne({ verifyTokenEmail })
 }
-const create = async (body) => {
+const create = async body => {
   const user = new User(body)
   return await user.save()
 }

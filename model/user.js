@@ -1,5 +1,5 @@
 import pkg from 'mongoose'
-import bcrypt from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 import { randomUUID } from 'crypto'
 import gravatar from 'gravatar'
 import { Role } from '../lib/constants'
@@ -58,13 +58,13 @@ const userSchema = new Schema({
 })
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
-    const salt = await bcrypt.genSalt(6)
-    this.password = await bcrypt.hash(this.password, salt)
+    const salt = await bcryptjs.genSalt(6)
+    this.password = await bcryptjs.hash(this.password, salt)
   }
   next()
 })
 userSchema.methods.isValidPassword = async function (password) {
-  return await bcrypt.compare(password, this.password)
+  return await bcryptjs.compare(password, this.password)
 }
 const User = model('user', userSchema)
 
