@@ -2,14 +2,13 @@ import { HttpCode } from '../../lib/constants'
 import authService from '../../service/auth'
 import {
   EmailService,
-  SenderNodemailer,
-  // SenderSendgrid,
+  // SenderNodemailer,
+  SenderSendgrid,
 } from '../../service/email'
 import { CustomError } from '../../lib/custom-error'
 
 const registration = async (req, res, next) => {
-  try {
-    console.log(req.body)
+  
     const { email } = req.body
     const isUserExist = await authService.isUserExist(email)
     if (isUserExist) {
@@ -18,8 +17,8 @@ const registration = async (req, res, next) => {
     const userData = await authService.create(req.body)
     const emailService = new EmailService(
       process.env.NODE_ENV,
-      new SenderNodemailer(),
-      // new SenderSendgrid(),
+      // new SenderNodemailer(),
+      new SenderSendgrid(),
     )
     const isSend = await emailService.sendVerifyEmail(
       email,
@@ -33,8 +32,6 @@ const registration = async (req, res, next) => {
       code: HttpCode.CREATED,
       data: { ...userData, isSendEmailVerify: isSend },
     })
-  } catch (error) {
-    next(error)
-  }
+  
 }
 export default registration

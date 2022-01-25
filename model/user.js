@@ -53,7 +53,7 @@ const userSchema = new Schema({
 
   verifyTokenEmail: {
     type: String,
-    default: randomUUID(),
+    default: randomUUID,
   },
 })
 userSchema.pre('save', async function (next) {
