@@ -4,7 +4,7 @@ class EmailService {
     this.sender = sender
     switch (env) {
       case 'development':
-        this.link = 'https:localhost:5050'
+        this.link = 'http://localhost:5050'
         break
       case 'test':
         this.link = 'http://localhost:3000'
